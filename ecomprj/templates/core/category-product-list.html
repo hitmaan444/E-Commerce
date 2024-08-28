@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Product List</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        .product-card .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        .product-card .image-container img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .product-card .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .product-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .product-card .tag {
+            background-color: #f1f1f1;
+            color: #333;
+            padding: 3px 8px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .modal-content img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .modal-content .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-content .close:hover,
+        .modal-content .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ category.title }}</h1>
+    <div class="container">
+        
+        {% for product in products %}
+        
+        
+            <div class="product-card" onclick="openModal('{{ product.name }}', '{{ product.image.url }}', '{{ product.description }}', '{{ product.price }}', '{{ product.vendor }}')">
+            <div class="image-container">
+                {% if product.discount %}
+                <div class="badge">{{ product.discount }}% OFF</div>
+                {% endif %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                <div class="tags">  
+                    {% for tag in product.tags %}
+                    <div class="tag">{{ tag }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="name">{{ product.name }}</div>
+            <div class="description">{{ product.description }}</div>
+            <div class="price">{{ product.price }}</div>
+            <div class="vendor">{{ product.vendor }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImg" src="" alt="">
+            <div class="name" id="modalName"></div>
+            <div class="description" id="modalDescription"></div>
+            <div class="price" id="modalPrice"></div>
+            <div class="vendor" id="modalVendor"></div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(name, imgSrc, description, price, vendor) {
+            document.getElementById("modalImg").src = imgSrc;
+            document.getElementById("modalName").innerText = name;
+            document.getElementById("modalDescription").innerText = description;
+            document.getElementById("modalPrice").innerText = price;
+            document.getElementById("modalVendor").innerText = vendor;
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>

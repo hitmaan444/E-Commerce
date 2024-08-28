@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Vendor List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #444;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .controls input, .controls select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        ul#vendor-list {
+            list-style: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .vendor-card {
+            background-color: #fff;
+            margin-bottom: 15px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .vendor-card:hover {
+            background-color: #f1f1f1;
+        }
+
+        .vendor-card h2 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+        }
+
+        .vendor-card p {
+            margin: 5px 0;
+        }
+
+        .details-btn {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .details-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .vendor-details {
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            .controls input, .controls select {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .details-btn {
+                width: 100%;
+            }
+            
+        }
+    </style>
+    <head>
+        <!-- CSS styles -->
+    </head>
+    <body>
+        {% comment %} <header>
+            <h1>Vendor List</h1>
+            <div class="controls">
+                <input type="text" id="search" placeholder="Search vendors..." aria-label="Search vendors">
+                <select id="sort" aria-label="Sort vendors">
+                    <option value="title">Sort by Title</option>
+                    <option value="description">Sort by Description</option>
+                    <!-- Add more sorting options if needed -->
+                </select>
+            </div>
+        </header>
+     {% endcomment %}
+     <main>
+        <ul id="vendor-list">
+            {% for vendor in vendors %}
+            <li>
+                <a href="{% url 'core:vendor-detail' vendor.vid %}">
+                    <div class="vendor-card" data-title="{{ vendor.title }}" data-description="{{ vendor.description }}" data-address="{{ vendor.address }}" data-user="{{ vendor.user }}" data-contact="{{ vendor.contact }}">
+                        <h2>{{ vendor.title }}</h2>
+                        <img src="{{ vendor.image.url}}">
+                        <p>Description: {{ vendor.description }}</p>
+                        <p>User: {{ vendor.user }}</p>
+                        <p>Contact: {{ vendor.contact }}</p>
+                        <p>Number of Products: {{ vendor.num_products }}</p>
+                        <div class="product-box">
+                            
+                            <ul>
+                                {% for product in vendor.product_set.all %}
+                                <li><img src="{{ product.image.url }}" alt="{{ product.name }}" /></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <script>
+        // JavaScript code
+    </script>
+</body>
+</html>

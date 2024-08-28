@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .vendor-info {
+            margin-bottom: 20px;
+        }
+
+        .vendor-info p {
+            margin: 5px 0;
+        }
+
+        .vendor-info img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .product-list {
+            margin-top: 20px;
+        }
+
+        .product-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-list li {
+            margin-bottom: 10px;
+        }
+
+        .product-list img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        .product-list p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vendor Detail</h1>
+
+        <div class="vendor-info">
+            <img src="{{vendor.image.url}}" alt="Vendor Image">
+            <p><strong>Title:</strong> {{vendor.title}}</p>
+            <p><strong>Description:</strong> {{vendor.description}}.</p>
+            <p><strong>User:</strong> {{vendor.user}} </p>
+            <p><strong>Contact:</strong> {{vendor.contact}} 
+            <p><strong>address:</strong> {{vendor.address}} 
+        </div>
+        <div class="product-list">
+            <h2>Products</h2>
+            <ul>
+                {% for product in products %}
+                <li>
+                    <a href="{% url 'core:product_detail' product.pid %}" class="product-card">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }} Image">
+                    <p><strong>Name:</strong> {{ product.category }}</p>
+                    <p><strong>Description:</strong> {{ product.description }}</p>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

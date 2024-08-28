@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Product Detail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .homepage-box {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .product-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-name {
+            font-size: 2.5em;
+            margin: 0;
+            color: #333;
+            border-bottom: 2px solid #e67e22;
+            padding-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 2em;
+            color: #e67e22;
+            margin: 10px 0;
+        }
+
+        .product-description {
+            font-size: 1.1em;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        .product-specifications h2, .product-reviews h2, .product-ratings h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .product-specifications ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .product-specifications li {
+            background: #f2f2f2;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .product-specifications li span {
+            font-weight: bold;
+        }
+
+        .product-reviews {
+            margin: 20px 0;
+        }
+
+        .product-reviews h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .review {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 5px solid #3498db;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .review img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .review-content {
+            flex: 1;
+        }
+
+        .review-text {
+            font-size: 1em;
+            margin: 0;
+        }
+
+        .review-author {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .product-ratings {
+            margin: 20px 0;
+        }
+
+        .stars {
+            color: #ffcc00;
+            font-size: 1.5em;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+            width: fit-content;
+            align-self: flex-start;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+
+            .product-image {
+                margin-bottom: 20px;
+            }
+
+            .product-info {
+                text-align: center;
+            }
+
+            .btn {
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'core:index' %}" class="homepage-box">Homepage</a>
+    <div class="container">
+        <div class="product-detail">
+            <div class="product-image">
+                <img src="{{product.image.url}}" alt="Product Image">
+            </div>
+            <div class="product-info">
+                <h1 class="product-name">{{product.title}}</h1>
+                <p class="product-price">{{product.price}}</p>
+                <p class="product-description">
+                    {{product.description}}
+                </p>
+                <div class="product-specifications">
+                    <h2>Specifications</h2>
+                    <ul>
+                        <li><span>Price:</span> {{product.price}}</li>
+                        <li><span>User :</span> {{product.user}}</li>
+                        <li><span>adress :</span> {{Address.address}}</li>
+                        <li><span>Date :</span> {{product.date}}</li>
+                        <li><span>Vendor :</span> {{product.vendor}}</li>
+                        <li><span>Old Price :</span> {{product.old_price}}</li>
+                        <li><span>Percentage :</span> {{product.get_percentage}}% off</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

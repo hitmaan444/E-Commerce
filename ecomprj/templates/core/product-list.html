@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Product Listing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .featured-products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .product-card img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+        .product-card:hover img {
+            opacity: 0.9;
+        }
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ff9900;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .tags {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        .tag {
+            background-color: #e0e0e0;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .product-info {
+            padding: 15px;
+        }
+        .product-info h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        .product-info p {
+            color: #777;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .price {
+            color: #b12704;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .old-price {
+            color: #999;
+            font-size: 14px;
+            text-decoration: line-through;
+            margin-left: 5px;
+        }
+        .rating {
+            margin: 10px 0;
+            color: #ff9900;
+        }
+        .rating i {
+            font-size: 14px;
+        }
+        .add-to-cart-button {
+            background-color: #febd69;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .add-to-cart-button:hover {
+            background-color: #ffa724;
+        }
+        @media (max-width: 768px) {
+            .product-card {
+                width: calc(50% - 20px);
+            }
+        }
+        @media (max-width: 480px) {
+            .product-card {
+                width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<main class="main">
+    <h2>Featured Products</h2>
+    <div class="featured-products">
+        {% for product in products %}
+
+            <div class="product-card">
+            <div class="image-container">
+                {% if product.discount %}
+                <div class="badge">{{ product.discount }}% OFF</div>
+                {% endif %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                <div class="tags">
+                    {% for tag in product.tags %}
+                    <div class="tag">{{ tag }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="product-info">
+                <h3>{{ product.title }}</h3>
+                <p>{{ product.description }}</p>
+                <div class="price">
+                    ${{ product.price }}
+                    {% if product.old_price %}
+                    <span class="old-price">${{ product.old_price }}</span>
+                    {% endif %}
+                </div>
+                <div class="rating">
+                    {% for i in "12345" %}
+                        <i class="fa{% if i <= product.rating %}s{% else %}r{% endif %} fa-star"></i>
+                    {% endfor %}
+                </div>
+                <button class="add-to-cart-button">Add to Cart</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+
+</body>
+</html>

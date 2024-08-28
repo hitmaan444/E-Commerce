@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$trikeAgain</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #232f3e;
+            --secondary-color: #37475a;
+            --accent-color: #febd69;
+            --text-color: #333;
+            --background-color: #f4f4f4;
+            --price-color: #b12704;
+            --discount-color: #ff4d4d;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            padding: 10px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .header .search-bar {
+            flex-grow: 1;
+            margin: 10px;
+            display: flex;
+        }
+        
+        .header .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .header .search-bar button {
+            padding: 10px;
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .header .search-bar button:hover {
+            background-color: #ffa835;
+        }
+        
+        .header .account {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header .account div, .header .account a {
+            margin-left: 20px;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .header .account .logout-button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            margin-left: 20px;
+        }
+        
+        .nav {
+            background-color: var(--secondary-color);
+            padding: 10px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .nav .nav-links a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            position: relative;
+        }
+        
+        .nav .nav-links a:hover::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            height: 2px;
+            width: 100%;
+            background: white;
+        }
+        
+        .main {
+            padding: 20px;
+        }
+        
+        .featured-products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+            background: white;
+            position: relative;
+            width: 220px; /* Fixed width for product cards */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 150px; /* Fixed height for images */
+            object-fit: cover;
+        }
+        
+        .product-card .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--discount-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .product-card .product-info {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .product-card .product-info h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .product-card .product-info p {
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .product-card .product-info .price {
+            color: var(--price-color);
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .product-card .product-info .old-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-right: 10px;
+        }
+        
+        .product-card .product-info .rating {
+            margin-top: 5px;
+        }
+        
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .signin-button, .signup-button {
+            margin: 9px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid white;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .signin-button:hover, .signup-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .gap {
+            display: flex;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .header, .nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        
+            .header .search-bar {
+                margin: 10px 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header, .nav {
+                padding: 10px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+<header class="header" role="banner">
+    <div class="logo">StrikeAgain</div>
+    <div class="search-bar" role="search">
+        <input type="text" placeholder="Search...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="account">
+        {% if user.is_authenticated %}
+            <div>Hello, {{ user.username }}</div>
+            <a href="{% url 'userauths:sign-out' %}" class="logout-button">Sign Out</a>
+            <div>Orders</div>
+            <div>Cart</div>
+        {% else %}
+            <div class="gap">
+                <a href="{% url 'userauths:sign-in' %}" class="signin-button">Sign In</a>
+                <a href="{% url 'userauths:sign-up' %}" class="signup-button">Sign Up</a>
+            </div>
+        {% endif %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</header>
+
+<nav class="nav" role="navigation">
+    <div class="nav-links">
+        <a href="{% url "core:category-list" %}">Category</a>
+        <a href="#">Today's Deals</a>
+        <a href="#">Customer Service</a>
+        <a href="#">Gift Cards</a>
+        <a href="{% url "userauths:sign-up" %}">Registry</a>
+        <a href="#">Sell</a>
+        <a href="{% url "core:product-list" %}">Products</a>
+    </div>
+</nav>
+
+<main class="main" role="main">
+    <h2>Featured Products</h2>
+    <div class="featured-products">
+        {% for product in products %}
+        <a href="{% url 'core:product_detail' product.pid %}" class="product-card">
+            <div class="discount-badge">{{ product.get_percentage|floatformat:0 }}% OFF</div>
+            <img src="{{ product.image.url }}" alt="{{ product.title }}">
+            <div class="product-info">
+                <h3>{{ product.title }}</h3>
+                <p>{{ product.description }}</p>
+                <p>{{ product.user }}</p>
+                <p>{{ product.vendor }}</p>
+                <div>
+                    <span class="old-price">${{ product.old_price }}</span>
+                    <span class="price">${{ product.price }}</span>
+                </div>
+                <div class="rating">
+                    {% for i in 1..5 %}
+                        {% if i <= product.rating %}
+                            <i class="fas fa-star" style="color: #ffcc00;"></i>
+                        {% else %}
+                            <i class="far fa-star" style="color: #ffcc00;"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+
+<footer class="footer" role="contentinfo">
+    <p>&copy; 2024 Amazon Clone. All rights reserved.</p>
+</footer>
+
+<script>
+    document.querySelector('.search-bar button').addEventListener('click', function() {
+        alert('Search functionality is not yet implemented.');
+    });
+</script>
+
+</body>
+</html>
